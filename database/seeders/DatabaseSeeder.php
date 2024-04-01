@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             SubjectTabSeeder::class,
+            UserSeeder::class,
+            PostSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

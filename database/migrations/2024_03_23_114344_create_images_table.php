@@ -6,22 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+/**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('route');
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
+            $table->string('path'); // Ruta o nombre de archivo de la imagen
             $table->timestamps();
+
+            // Indice para la relación polimórfica
+            $table->index(['imageable_id', 'imageable_type']);
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('images');
     }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->string('title');
             $table->string('content');
-            $table->boolean('comments')->default(true);
             $table->timestamps();
             $table->foreign('teacher_id')->references('id')->on('users');
             $table->foreign('subject_id')->references('id')->on('subjects');
