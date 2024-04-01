@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Posts;
+use App\Models\Image;
 use Illuminate\Http\Request;
-use App\Models\Subject;
-use App\Models\Comment;
 
-class PostController extends Controller
+class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,18 +34,15 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Image $image)
     {
         //
-        $post = Posts::find($id);
-        $comments = Comment::where('post_id', $id)->get();
-        return view('pages.post.show', compact('post', 'comments'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(Image $image)
     {
         //
     }
@@ -55,7 +50,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, Image $image)
     {
         //
     }
@@ -63,7 +58,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(Image $image)
     {
         //
     }

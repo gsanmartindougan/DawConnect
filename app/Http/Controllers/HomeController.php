@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
+use App\Models\Post;
+use App\Models\User;
 class HomeController extends Controller
 {
     /**
@@ -24,6 +26,11 @@ class HomeController extends Controller
     public function index()
     {
         $asignaturas = Subject::all();
-        return view('home', compact('asignaturas'));
+        foreach ($asignaturas as $asignatura) {
+            $asignatura->recent_posts = $asignatura->recentPosts();
+        }
+
+        session()->put('asignaturas', $asignaturas);
+        return view('pages.home.home', compact('asignaturas'));
     }
 }

@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Posts;
 use Illuminate\Http\Request;
-use App\Models\Subject;
-use App\Models\Comment;
 
-class PostController extends Controller
+class PerfilController extends Controller
 {
+    //
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
+        dd(session('user')->id);
     }
 
     /**
@@ -36,12 +35,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show()
     {
         //
-        $post = Posts::find($id);
-        $comments = Comment::where('post_id', $id)->get();
-        return view('pages.post.show', compact('post', 'comments'));
+
     }
 
     /**

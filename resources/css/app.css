@@ -1,0 +1,8 @@
+/* CSS */
+body {
+    overflow-y: auto; /* Oculta la barra de desplazamiento vertical para todos los elementos */
+}
+
+body {
+    overflow-x: auto; /* Permite la barra de desplazamiento horizontal cuando sea necesario */
+}
