@@ -29,7 +29,6 @@
         </div>
         <!-- Tabs navs -->
     </div>
-
     {{-- Tabs --}}
     <div class="tab-content pt-4 col-sm-10 mx-auto" role="tablist">
         {{-- Tab publicaciones recientes --}}
@@ -72,4 +71,5 @@
             </div>
         </div>
     </div>
+    @include('layouts.action')
 @endsection

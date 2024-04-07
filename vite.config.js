@@ -9,7 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/css/app.css',
             ],
-            refresh: ['resources/views/**', 'resources/sass/**', 'resources/js/**'],
+            refresh: ['resources/views/**', 'resources/sass/**', 'resources/js/**', 'resources/css/**'],
         }),
     ],
 });

@@ -12,5 +12,9 @@
         "laravel-vite-plugin": "^1.0.0",
         "sass": "^1.56.1",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "feather-icons": "^4.29.1",
+        "quill": "^2.0.0-rc.5"
     }
 }

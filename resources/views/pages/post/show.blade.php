@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ $post->title }}</div>
 
@@ -24,10 +24,6 @@
                         @endforelse
                     </ul>
                 </div>
-            </div>
-
-            <div class="mt-4">
-                +Nuevo comentario+
             </div>
         </div>
     </div>
