@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark sticky-top navbar-expand-lg" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'DawConnect') }}
@@ -13,33 +13,6 @@
             <ul class="navbar-nav me-auto">
                 @guest
                     @if (Route::has('login'))
-                    @endif
-
-                    @if (Route::has('register'))
-                    @endif
-                @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Asignaturas
-                        </a>
-                        @php
-                            $asignaturas = session('asignaturas');
-                        @endphp
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            @foreach ($asignaturas as $asignatura)
-                                    <a class="dropdown-item" href="#">{{$asignatura->name}}</a>
-                            @endforeach
-
-                    </li>
-                @endguest
-            </ul>
-
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ms-auto">
-                <!-- Authentication Links -->
-                @guest
-                    @if (Route::has('login'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
@@ -51,13 +24,33 @@
                         </li>
                     @endif
                 @else
+                    <li class="nav-item">
+                        <a id="navbarBuscar" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"
+                            data-bs-toggle="modal" data-bs-target="#busqueda">
+                            <x-antdesign-search-o /> Buscar
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        <a id="navbarAsignaturas" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre title="Asignaturas">
+                            <x-antdesign-book /> Asignaturas
+                        </a>
+                        @php
+                            $asignaturas = session('asignaturas');
+                        @endphp
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            @foreach ($asignaturas as $asignatura)
+                                <a class="dropdown-item" href="#">{{ $asignatura->name }}</a>
+                            @endforeach
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navbarPerfil" class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                            <x-antdesign-user-o /> {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('perfil.index') }}">
                                 {{ __('Perfil') }}
                             </a>
@@ -76,3 +69,25 @@
         </div>
     </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="busqueda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Buscar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                        style="background-color: white">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
