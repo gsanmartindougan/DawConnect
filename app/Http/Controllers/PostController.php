@@ -23,6 +23,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('pages.post.create');
     }
 
     /**
@@ -31,6 +32,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        $post = new Posts();
+        $post->student_id = $request->user_id;
+        $post->subject_id = $request->asignatura;
+        $post->title = $request->titulo;
+        $post->content = $request->content;
+        $post->save();
+        $comments = Comment::where('post_id', $post->id)->get();
+        return view('pages.post.show', compact('post', 'comments'));
     }
 
     /**

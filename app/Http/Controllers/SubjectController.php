@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Posts;
+use App\Models\Subject;
+use App\Models\Comment;
 
 class SubjectController extends Controller
 {
@@ -34,9 +37,13 @@ class SubjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
         //
+        $posts = Posts::where('subject_id', $id)->orderBy('title')->get();
+        //dd($posts);
+        return view('pages.post.index', compact('posts'));
+
     }
 
     /**

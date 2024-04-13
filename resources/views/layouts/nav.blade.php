@@ -42,7 +42,7 @@
                             @foreach ($asignaturas as $asignatura)
                                 <a class="dropdown-item" href="#">{{ $asignatura->name }}</a>
                             @endforeach
-
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarPerfil" class="nav-link dropdown-toggle" href="#" role="button"

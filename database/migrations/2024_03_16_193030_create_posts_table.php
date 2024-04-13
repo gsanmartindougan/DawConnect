@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('subject_id');
             $table->string('title');
-            $table->string('content');
+            $table->longText('content')->nullable();
             $table->timestamps();
             $table->foreign('student_id')->references('id')->on('users');
             $table->foreign('subject_id')->references('id')->on('subjects');

@@ -24,3 +24,4 @@ Route::resource('/home', App\Http\Controllers\HomeController::class);
 Route::resource('/post', App\Http\Controllers\PostController::class);
 Route::resource('/asignatura', App\Http\Controllers\SubjectController::class);
 Route::resource('/perfil', App\Http\Controllers\PerfilController::class);
+

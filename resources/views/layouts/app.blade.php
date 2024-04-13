@@ -12,25 +12,25 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/summernote-lite.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 
 <body>
     <div id="app">
         @include('layouts.nav')
-
         <main class="py-4">
             <div class="container">
-                <div class="row">
-                    <div class="col">
-                        @yield('content')
-                    </div>
-                </div>
+                @yield('content')
             </div>
         </main>
     </div>
-    @include('layouts.footer')
+    <script src="{{ asset('js/summernote-lite.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
+    {{-- @include('layouts.footer') --}}
+    @stack('custom-scripts')
 </body>
 
 </html>

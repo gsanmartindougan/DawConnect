@@ -38,7 +38,7 @@
                     <div class="p-2 col-sm-6" role="tabpanel">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title text-center"><a href="{{route('asignatura.show', htmlspecialchars($asignatura->id))}}"
+                                <h5 class="card-title text-center"><a href="{{route('asignatura.show', $asignatura->id)}}"
                                         class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">{{ $asignatura->name }}</a>
                                 </h5>
                                 @foreach ($asignatura->recent_posts as $post)

@@ -1,26 +1,49 @@
-<div class="container">
-    <form action="https://httpbin.org/post" method="post">
-      <div class="form-group">
-        <label for="name">Display name</label>
-        <input id="name" name="name" type="text">
-      </div>
-      <div class="form-group">
-        <label for="location">Location</label>
-        <input id="location" name="location" type="text">
-      </div>
-      <div class="form-group">
-        <label>About me</label>
-        <div id="editor"></div>
-      </div>
-      <button type="submit">Submit Form</button>
-      <button type="button" id="resetForm">Reset to Initial Data</button>
-    </form>
-  </div>
+@extends('layouts.app')
 
-
-@push('scripts')
-<script>
-
-</script>
-
+@section('content')
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-12">
+                <div class="text-center">
+                    {{--dd(session('user'))--}}
+                    <h1>Nueva Publicación</h1>
+                </div>
+                <form action="{{route('post.store')}}" method="post">
+                    @csrf
+                    <label for="asignatura" class="fs-4">Asignatura</label>
+                    <select name="asignatura" id="asignatura" class="form-select form-select-lg mb-3">
+                        @php
+                            $asignaturas = session('asignaturas');
+                        @endphp
+                        @foreach ($asignaturas as $asignatura)
+                            <option value="{{ $asignatura->id }}">{{ $asignatura->name }}</option>
+                        @endforeach
+                    </select>
+                    <label for="titulo" class="fs-4">Título</label>
+                    <input type="text" id="titulo" name="titulo" class="form-control mb-2">
+                    <textarea id="summernote" name="content"></textarea>
+                    <input type="hidden" name="user_id" value="{{session('user')->id}}">
+                    <button type="submit" class="btn btn-primary mt-2">Publicar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('custom-scripts')
+    <script>
+        $('#summernote').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 500,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', [ 'codeview', 'help']]
+            ]
+        });
+    </script>
 @endpush
