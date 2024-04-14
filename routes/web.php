@@ -20,8 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('/home', App\Http\Controllers\HomeController::class);
-Route::resource('/post', App\Http\Controllers\PostController::class);
-Route::resource('/asignatura', App\Http\Controllers\SubjectController::class);
-Route::resource('/perfil', App\Http\Controllers\PerfilController::class);
+Route::group(['middleware' => 'auth'], function () {
+    // Aquí defines tus rutas que requieren autenticación
+
+    Route::resource('/home', App\Http\Controllers\HomeController::class);
+    Route::resource('/post', App\Http\Controllers\PostController::class);
+    Route::resource('/asignatura', App\Http\Controllers\SubjectController::class);
+    Route::resource('/perfil', App\Http\Controllers\PerfilController::class);
+
+});
 

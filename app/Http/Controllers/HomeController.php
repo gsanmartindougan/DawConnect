@@ -25,12 +25,32 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $asignaturas = Subject::all();
-        foreach ($asignaturas as $asignatura) {
-            $asignatura->recent_posts = $asignatura->recentPosts();
+        // Obtener el usuario autenticado
+        $user = auth()->user();
+
+        // Verificar si el usuario está autenticado
+        if ($user) {
+            // Guardar el usuario en la sesión
+            session()->put('user', $user);
+
+            // Obtener todas las asignaturas del usuario
+            $asignaturas = Subject::all();
+            foreach ($asignaturas as $asignatura) {
+                $asignatura->recent_posts = $asignatura->recentPosts();
+            }
+        } else {
+            // Si el usuario no está autenticado, obtener todas las asignaturas
+            $asignaturas = Subject::all();
+            foreach ($asignaturas as $asignatura) {
+                $asignatura->recent_posts = $asignatura->recentPosts();
+            }
         }
 
+        // Guardar las asignaturas en la sesión
         session()->put('asignaturas', $asignaturas);
+
+        // Retornar la vista con las asignaturas
         return view('pages.home.home', compact('asignaturas'));
     }
+
 }
