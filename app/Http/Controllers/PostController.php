@@ -72,8 +72,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy($id)
     {
         //
+        $post = Posts::find($id);
+        $post->delete();
+        return back()->with('success', '¡El post ha sido borrado correctamente!');
     }
 }

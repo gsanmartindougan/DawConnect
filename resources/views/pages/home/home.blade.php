@@ -43,7 +43,7 @@
                                 </h5>
                                 @foreach ($asignatura->recent_posts as $post)
                                     <li>
-                                        <a href="{{route('post.show', htmlspecialchars($post->id))}}"
+                                        <a href="{{route('post.show', $post->id)}}"
                                             class="link-body-emphasis link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover">{{ $post->title }}</a>
                                     </li>
                                 @endforeach
@@ -71,5 +71,4 @@
             </div>
         </div>
     </div>
-    @include('layouts.action')
 @endsection

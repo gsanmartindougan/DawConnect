@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
 
 <head>
     <meta charset="utf-8">
@@ -23,10 +23,21 @@
         @include('layouts.nav')
         <main class="py-4">
             <div class="container">
+                @if(session('success'))
+                <div class="d-flex alert alert-success mt-3" role="alert">
+                    <div class="col-10">
+                        {{ session('success') }}
+                    </div>
+                    <div class="d-flex col-2 justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
                 @yield('content')
             </div>
         </main>
     </div>
+    @include('layouts.action')
     <script src="{{ asset('js/summernote-lite.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
     {{-- @include('layouts.footer') --}}

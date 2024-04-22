@@ -42,7 +42,7 @@ class SubjectController extends Controller
         //
         $posts = Posts::where('subject_id', $id)->orderBy('title')->get();
         //dd($posts);
-        return view('pages.post.index', compact('posts'));
+        return view('pages.asignaturas.show', compact('posts'));
 
     }
 

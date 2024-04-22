@@ -40,7 +40,7 @@
                         @endphp
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             @foreach ($asignaturas as $asignatura)
-                                <a class="dropdown-item" href="#">{{ $asignatura->name }}</a>
+                                <a class="dropdown-item" href="{{route('asignatura.show', $asignatura->id)}}">{{ $asignatura->name }}</a>
                             @endforeach
                         </div>
                     </li>
