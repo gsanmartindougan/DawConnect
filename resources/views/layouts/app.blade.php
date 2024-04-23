@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -41,6 +41,22 @@
     <script src="{{ asset('js/summernote-lite.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
     {{-- @include('layouts.footer') --}}
+    <script>
+        $('#summernote').summernote({
+            placeholder: 'Hello stand alone ui',
+            tabsize: 2,
+            height: 500,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', [ 'codeview', 'help']]
+            ]
+        });
+    </script>
     @stack('custom-scripts')
 </body>
 

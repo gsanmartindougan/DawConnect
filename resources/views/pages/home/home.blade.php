@@ -32,7 +32,7 @@
     {{-- Tabs --}}
     <div class="tab-content pt-4 col-sm-10 mx-auto" role="tablist">
         {{-- Tab publicaciones recientes --}}
-        <div class="tab-pane active" id="publicaciones_recientes" role="tabpanel" aria-labelledby="simple-tab-0">
+        <div class="tab-pane active " id="publicaciones_recientes" role="tabpanel" aria-labelledby="simple-tab-0">
             <div class="row justify-content-center">
                 @forelse ($asignaturas as $asignatura)
                     <div class="p-2 col-sm-6" role="tabpanel">

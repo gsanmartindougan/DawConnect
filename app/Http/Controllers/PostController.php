@@ -56,18 +56,29 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit($id)
     {
         //
+        $post = Posts::find($id);
+        return view('pages.post.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
+        //dd($id);
+        $post = Posts::find($id);
+        $post->title = $request->titulo;
+        $post->content = $request->content;
+        $post->save();
+
+        $comments = Comment::where('post_id', $id)->get();
+        return view('pages.post.show', compact('post', 'comments'));
     }
+
 
     /**
      * Remove the specified resource from storage.
