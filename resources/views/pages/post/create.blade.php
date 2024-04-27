@@ -21,7 +21,7 @@
                         </select>
                         <label for="titulo" class="fs-5">Título</label>
                         <input type="text" id="titulo" name="titulo" class="form-control mb-2" required>
-                        <textarea id="summernote" name="content"></textarea>
+                        <textarea id="" class="summernote" name="content"></textarea>
                         <input type="hidden" name="user_id" value="{{ session('user')->id }}">
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary mt-2">Publicar</button>
@@ -40,12 +40,13 @@
         event.preventDefault();
 
         let formData = new FormData(this);
-
+        //console.log(formData)
         axios.post('{{ route('post.store') }}', formData)
             .then(function(response) {
-                console.log(response.data.postUrl)
+                //console.log(response.data.postUrl)
                 let postUrl = response.data.postUrl;
                 let mensaje = response.data.mensaje;
+                localStorage.setItem('mensaje', mensaje);
                 window.location.replace(postUrl);
             })
             .catch(function(error) {

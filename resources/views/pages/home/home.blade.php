@@ -78,7 +78,19 @@
     </div>
     </div>
 </div>
-
-
-
 @endsection
+
+@push('custom-scripts')
+<script>
+    let mensaje = localStorage.getItem('mensaje');
+
+    if (mensaje) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: mensaje,
+        });
+        localStorage.removeItem('mensaje');
+    }
+</script>
+@endpush

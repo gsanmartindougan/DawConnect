@@ -10,11 +10,10 @@ class Posts extends Model
     use HasFactory;
     protected $table = "posts";
 
-    /**
-     * Get all of the post's images.
-     */
-    public function images()
+
+    public function user()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->belongsTo(User::class, 'student_id');
     }
+
 }

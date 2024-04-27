@@ -23,38 +23,28 @@
     <div id="app">
         @include('layouts.nav')
         <main class="py-2">
-{{--                 @if(session('success'))
-                <div class="d-flex alert alert-success mt-3" role="alert">
-                    <div class="col-10">
-                        {{ session('success') }}
-                    </div>
-                    <div class="d-flex col-2 justify-content-end">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-                @endif --}}
-                @yield('content')
+            @yield('content')
             @include('layouts.action')
         </main>
     </div>
     <script src="{{ asset('js/summernote-lite.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- @include('layouts.footer') --}}
     <script>
         $(document).ready(function() {
-            $('#summernote').summernote({
-                placeholder: 'Hello stand alone ui',
-                tabsize: 2,
+            $('.summernote').summernote({
                 height: 500,
                 toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['table', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['view', ['codeview', 'help']]
+                    ['view', ['codeview', 'help']],
+                    ['height', ['height']]
                 ]
             });
         });

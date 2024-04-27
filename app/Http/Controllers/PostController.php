@@ -79,14 +79,22 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
-        //dd($id);
+        //dd($request->titulo);
         $post = Posts::find($id);
         $post->title = $request->titulo;
         $post->content = $request->content;
         $post->save();
 
-        $comments = Comment::where('post_id', $id)->get();
-        return view('pages.post.show', compact('post', 'comments'));
+        $postUrl = URL::route('post.show', ['post'=>$post->id]);
+        $comments = Comment::where('post_id', $post->id)->get();
+
+        return response()->json([
+            'success' => true,
+            'post' => $post,
+            'postUrl' => $postUrl,
+            'mensaje' => '¡La publicación se ha modificado correctament!',
+            'comments' => $comments,
+        ]);
     }
 
 
@@ -98,6 +106,9 @@ class PostController extends Controller
         //
         $post = Posts::find($id);
         $post->delete();
-        return back()->with('success', '¡El post ha sido borrado correctamente!');
+        return response()->json([
+            'success' => true,
+            'mensaje' => '¡La publicación se ha borrado correctament!',
+        ]);
     }
 }

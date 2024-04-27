@@ -10,11 +10,9 @@ class Comment extends Model
     use HasFactory;
     protected $table = "comments";
 
-    /**
-     * Get all of the comment's images.
-     */
-    public function images()
+    public function user()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->belongsTo(User::class, 'user_id');
     }
+
 }
