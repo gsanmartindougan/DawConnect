@@ -1,10 +1,22 @@
 /* CSS */
 body {
     overflow-y: auto; /* Oculta la barra de desplazamiento vertical para todos los elementos */
+    background-image: url('../images/background.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 body {
-    overflow-x: auto; /* Permite la barra de desplazamiento horizontal cuando sea necesario */
+    overflow-x: auto;
+}
+
+.navbar{
+    background-color: #E5DDC5;
+}
+
+#summernote{
+    background-color: white;
 }
 
 .floating-container{

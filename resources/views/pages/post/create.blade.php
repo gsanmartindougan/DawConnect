@@ -1,34 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-md-12">
-                <div class="text-center">
-                    {{--dd(session('user'))--}}
-                    <h1>Nueva Publicación</h1>
+<div class="card mx-4" style="background-color: rgba(254, 253, 237, 0.4);">
+    <div class="card-body justify-content-md-center mx-4">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h3 class="card-title">Nueva Publicación</h3>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <form id="postForm">
+                        <label for="asignatura" class="fs-5">Asignatura</label>
+                        <select name="asignatura" id="asignatura" class="form-select form-select-lg mb-3" required>
+                            @php
+                                $asignaturas = session('asignaturas');
+                            @endphp
+                            @foreach ($asignaturas as $asignatura)
+                                <option value="{{ $asignatura->id }}">{{ $asignatura->name }}</option>
+                            @endforeach
+                        </select>
+                        <label for="titulo" class="fs-5">Título</label>
+                        <input type="text" id="titulo" name="titulo" class="form-control mb-2" required>
+                        <textarea id="summernote" name="content"></textarea>
+                        <input type="hidden" name="user_id" value="{{ session('user')->id }}">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary mt-2">Publicar</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="{{route('post.store')}}" method="post">
-                    @csrf
-                    <label for="asignatura" class="fs-4">Asignatura</label>
-                    <select name="asignatura" id="asignatura" class="form-select form-select-lg mb-3">
-                        @php
-                            $asignaturas = session('asignaturas');
-                        @endphp
-                        @foreach ($asignaturas as $asignatura)
-                            <option value="{{ $asignatura->id }}">{{ $asignatura->name }}</option>
-                        @endforeach
-                    </select>
-                    <label for="titulo" class="fs-4">Título</label>
-                    <input type="text" id="titulo" name="titulo" class="form-control mb-2">
-                    <textarea id="summernote" name="content"></textarea>
-                    <input type="hidden" name="user_id" value="{{session('user')->id}}">
-                    <button type="submit" class="btn btn-primary mt-2">Publicar</button>
-                </form>
             </div>
         </div>
     </div>
+</div>
 @endsection
-@push('custom-scripts')
 
+@push('custom-scripts')
+<script>
+    document.getElementById('postForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let formData = new FormData(this);
+
+        axios.post('{{ route('post.store') }}', formData)
+            .then(function(response) {
+                console.log(response.data.postUrl)
+                let postUrl = response.data.postUrl;
+                let mensaje = response.data.mensaje;
+                window.location.replace(postUrl);
+            })
+            .catch(function(error) {
+                console.error(error);
+                console.error(response.data.postUrl);
+            });
+    });
+</script>
 @endpush

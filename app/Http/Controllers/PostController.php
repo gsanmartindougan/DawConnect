@@ -6,6 +6,7 @@ use App\Models\Posts;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Comment;
+use Illuminate\Support\Facades\URL;
 
 class PostController extends Controller
 {
@@ -33,13 +34,22 @@ class PostController extends Controller
     {
         //
         $post = new Posts();
-        $post->student_id = $request->user_id;
-        $post->subject_id = $request->asignatura;
-        $post->title = $request->titulo;
-        $post->content = $request->content;
+        $post->student_id = $request->input('user_id');
+        $post->subject_id = $request->input('asignatura');
+        $post->title = $request->input('titulo');
+        $post->content = $request->input('content');
         $post->save();
+
+        $postUrl = URL::route('post.show', ['post'=>$post->id]);
         $comments = Comment::where('post_id', $post->id)->get();
-        return view('pages.post.show', compact('post', 'comments'));
+
+        return response()->json([
+            'success' => true,
+            'post' => $post,
+            'postUrl' => $postUrl,
+            'mensaje' => '¡La publicación se ha creado correctament!',
+            'comments' => $comments,
+        ]);
     }
 
     /**
