@@ -12,16 +12,23 @@ class Subject extends Model
     protected $table = "subjects";
     protected $fillable = [
         "name",
-    ] ;
+    ];
 
     public function posts()
     {
         return $this->hasMany(Posts::class);
     }
+    public function course()
+    {
+        return $this->hasMany(Course::class);
+    }
 
     public function recentPosts($limit = 5)
     {
-        // Cargar los últimos posts de esta asignatura ordenados por fecha de creación descendente
         return $this->posts()->orderBy('created_at', 'desc')->limit($limit)->get();
+    }
+    public function recentCourse($limit = 5)
+    {
+        return $this->course()->orderBy('created_at', 'desc')->limit($limit)->get();
     }
 }

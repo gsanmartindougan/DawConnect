@@ -70,7 +70,7 @@ class CommentController extends Controller
 
         return response()->json([
             'success' => true,
-            'mensaje' => '¡El comentario se ha modificado correctament!',
+            'mensaje' => '¡El comentario se ha modificado correctamente!',
         ]);
     }
 
@@ -84,7 +84,7 @@ class CommentController extends Controller
         $comentario->delete();
         return response()->json([
             'success' => true,
-            'mensaje' => '¡El comentario se ha borrado correctament!',
+            'mensaje' => '¡El comentario se ha borrado correctamente!',
         ]);
     }
 }

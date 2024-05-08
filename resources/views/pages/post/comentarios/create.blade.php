@@ -8,8 +8,8 @@
             <div class="modal-body">
                 <form id="postForm">
                     <textarea id="" name="content" class="summernote" required></textarea>
-                    <input type="hidden" name="user_id" value="{{ session('user')->id }}">
-                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="post_id" value="{{ $post?->id }}">
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary mt-2">Publicar</button>
                     </div>
@@ -22,7 +22,7 @@
     <script>
         document.getElementById('postForm').addEventListener('submit', function(event) {
             event.preventDefault();
-
+            Swal.showLoading()
             let formData = new FormData(this);
 
             axios.post('{{ route('comentario.store') }}', formData)

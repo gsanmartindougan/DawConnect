@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Posts;
+use App\Models\User;
 class PerfilController extends Controller
 {
     //
@@ -13,9 +16,14 @@ class PerfilController extends Controller
     public function index()
     {
         //
-        dd(session('user')->id);
+        //dd(session('user')->id);
+        $posts = Posts::where('student_id', auth()->user()->id)->paginate(9);
+        $posts->withPath('/perfil');
+        if (request()->ajax()) {
+            return view('pages.profile.tabs.publicaciones', compact('posts'));
+        }
+        return view('pages.profile.index', compact('posts'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -35,9 +43,15 @@ class PerfilController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $user = User::find($id);
+        $posts = Posts::where('student_id', $user->id)->paginate(9);
+        $posts->withPath('/perfil');
+        if (request()->ajax()) {
+            return view('pages.profile.tabs.publicaciones', compact('posts'));
+        }
+        return view('pages.profile.show', compact('posts', 'user'));
 
     }
 

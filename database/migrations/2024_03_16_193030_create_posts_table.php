@@ -17,9 +17,10 @@ return new class extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->string('title');
             $table->longText('content')->nullable();
+            $table->unsignedBigInteger('likes');
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('users');
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 

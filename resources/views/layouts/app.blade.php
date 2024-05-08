@@ -24,13 +24,15 @@
         @include('layouts.nav')
         <main class="py-2">
             @yield('content')
-            @include('layouts.action')
+            @if (auth()->user())
+                @include('layouts.action')
+            @endif
         </main>
     </div>
     <script src="{{ asset('js/summernote-lite.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- @include('layouts.footer') --}}
+     {{-- @include('layouts.footer') --}}
     <script>
         $(document).ready(function() {
             $('.summernote').summernote({

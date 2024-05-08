@@ -25,23 +25,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Obtener el usuario autenticado
         $user = auth()->user();
-
-        // Verificar si el usuario está autenticado
         if ($user) {
-            // Guardar el usuario en la sesión
             session()->put('user', $user);
-
-            // Obtener todas las asignaturas del usuario
             $asignaturas = Subject::all();
             foreach ($asignaturas as $asignatura) {
                 $asignatura->recent_posts = $asignatura->recentPosts();
+                $asignatura->recent_course = $asignatura->recentCourse();
             }
         } else {
-            // Si el usuario no está autenticado, obtener todas las asignaturas
             $asignaturas = Subject::all();
             foreach ($asignaturas as $asignatura) {
+                $asignatura->recent_course = $asignatura->recentCourse();
                 $asignatura->recent_posts = $asignatura->recentPosts();
             }
         }

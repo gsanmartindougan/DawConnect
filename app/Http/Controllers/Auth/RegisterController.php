@@ -71,6 +71,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'student' => true,
+                'avatar' => 'images/avatar/default.png'
             ]);
         }
         if($data['opcion'] == 'teacher'){
@@ -80,6 +81,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'teacher' => true,
+                'avatar' => 'images/avatar/default.png'
             ]);
         }
         if($data['opcion'] == 'mod'){
@@ -89,6 +91,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'mod' => true,
+                'avatar' => 'images/avatar/default.png'
             ]);
         }
     }

@@ -40,8 +40,10 @@ class SubjectController extends Controller
     public function show($id)
     {
         //
-        $posts = Posts::where('subject_id', $id)->orderBy('title')->get();
-        //dd($posts);
+        $posts = Posts::where('subject_id', $id)->orderBy('title')->paginate(10);
+        if (request()->ajax()) {
+            return view('pages.asignaturas.posts', compact('posts'));
+        }
         return view('pages.asignaturas.show', compact('posts'));
 
     }

@@ -40,18 +40,48 @@ class PostController extends Controller
         $post->content = $request->input('content');
         $post->save();
 
-        $postUrl = URL::route('post.show', ['post'=>$post->id]);
+        $postUrl = URL::route('post.show', ['post' => $post->id]);
         $comments = Comment::where('post_id', $post->id)->get();
 
         return response()->json([
             'success' => true,
             'post' => $post,
             'postUrl' => $postUrl,
-            'mensaje' => '¡La publicación se ha creado correctament!',
+            'mensaje' => '¡La publicación se ha creado correctamente!',
             'comments' => $comments,
         ]);
     }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $user_id = $request->input('user_id');
+        $posts = Posts::where('title', 'like', '%' . $query . '%')
+            ->where('student_id', $user_id)->paginate(9);
 
+        if (request()->ajax()) {
+            return view('pages.profile.tabs.publicaciones', compact('posts'));
+        }
+    }
+    public function like($id)
+    {
+        $post = Posts::find($id);
+        $user = auth()->user();
+        if($user->likes->contains($post)){
+            return response()->json([
+                'success' => false,
+                'mensaje_error' => '¡Ya has añadido esta publicación a favoritos correctamente!'
+            ]);
+        }else{
+            $post->likes_count();
+            $post->save();
+            $user->likes()->attach($post->id);
+            return response()->json([
+                'success' => true,
+                'post' => $post,
+                'mensaje' => '¡Añadido a favoritos correctamente!'
+            ]);
+        }
+    }
     /**
      * Display the specified resource.
      */
@@ -85,14 +115,14 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->save();
 
-        $postUrl = URL::route('post.show', ['post'=>$post->id]);
+        $postUrl = URL::route('post.show', ['post' => $post->id]);
         $comments = Comment::where('post_id', $post->id)->get();
 
         return response()->json([
             'success' => true,
             'post' => $post,
             'postUrl' => $postUrl,
-            'mensaje' => '¡La publicación se ha modificado correctament!',
+            'mensaje' => '¡La publicación se ha modificado correctamente!',
             'comments' => $comments,
         ]);
     }
@@ -108,7 +138,7 @@ class PostController extends Controller
         $post->delete();
         return response()->json([
             'success' => true,
-            'mensaje' => '¡La publicación se ha borrado correctament!',
+            'mensaje' => '¡La publicación se ha borrado correctamente!',
         ]);
     }
 }

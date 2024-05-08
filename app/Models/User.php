@@ -24,6 +24,7 @@ class User extends Authenticatable
         'student',
         'teacher',
         'mod',
+        'avatar'
     ];
 
     /**
@@ -45,4 +46,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function post_like()
+    {
+        return $this->hasMany(Post_like::class, 'user_id', 'id');
+    }
+    public function course_like()
+    {
+        return $this->hasMany(Course_like::class, 'user_id', 'id');
+    }
+    public function posts()
+    {
+        return $this->hasMany(Posts::class, 'student_id', 'id');
+    }
+    public function likes()
+    {
+        return $this->belongsToMany(Posts::class, 'post_like', 'user_id', 'post_id');
+    }
+
 }

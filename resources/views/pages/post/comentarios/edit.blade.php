@@ -23,6 +23,7 @@
     <script>
         document.getElementById('editComentarioForm{{ $comment->id }}').addEventListener('submit', function(event) {
             event.preventDefault();
+            Swal.showLoading()
             let formData = ({
                 content: document.getElementById('content{{ $comment->id }}').value
             });

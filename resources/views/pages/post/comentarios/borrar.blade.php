@@ -21,6 +21,7 @@
 @push('custom-scripts')
     <script>
         document.getElementById('deleteComBtn{{ $comment->id }}').addEventListener('click', function() {
+            Swal.showLoading()
             axios.delete('{{ route('comentario.destroy', $comment->id) }}')
                 .then(function(response) {
                     //console.log(response.data);

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar sticky-top navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ asset('images/logo/svg/logo-no-background.svg') }}" alt="{{ asset('images/logo/png/logo-no-background.png') }}" style="max-height: 35px;">
