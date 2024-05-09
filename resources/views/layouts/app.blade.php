@@ -14,9 +14,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="secure_asset('css/summernote-lite.css')">
-    <link rel="stylesheet" href="secure_asset('css/bootstrap.css')">
-    <link rel="stylesheet" href="secure_asset('css/styles.css')">
+    <link rel="stylesheet" href="asset('css/summernote-lite.css', true)">
+    <link rel="stylesheet" href="asset('css/bootstrap.css', true)">
+    <link rel="stylesheet" href="asset('css/styles.css', true)">
 </head>
 
 <body>
@@ -29,8 +29,8 @@
             @endif
         </main>
     </div>
-    <script src="secure_asset('js/summernote-lite.js')"></script>
-    <script src="secure_asset('js/bootstrap.bundle.js')"></script>
+    <script src="asset('js/summernote-lite.js', true)"></script>
+    <script src="asset('js/bootstrap.bundle.js', true)"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      {{-- @include('layouts.footer') --}}
     <script>
