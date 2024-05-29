@@ -14,11 +14,17 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset('css/summernote-lite.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jkanban.min.css') }}">
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
+=======
+    <link rel="stylesheet" href="https://dawconnect.up.railway.app/css/summernote-lite.css">
+    <link rel="stylesheet" href="https://dawconnect.up.railway.app/css/bootstrap.css">
+    <link rel="stylesheet" href="https://dawconnect.up.railway.app/css/styles.css">
+>>>>>>> 484d25bb0bbd1c7f97e1df66680e28b8a63099d6
 </head>
 
 <body>
@@ -33,10 +39,15 @@
         </main>
         @include('layouts.footer')
     </div>
+<<<<<<< HEAD
     <script src="{{ asset('js/summernote-lite.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script src="{{ asset('js/jkanban.min.js') }}"></script>
+=======
+    <script src="https://dawconnect.up.railway.app/js/summernote-lite.js"></script>
+    <script src="https://dawconnect.up.railway.app/js/bootstrap.bundle.js"></script>
+>>>>>>> 484d25bb0bbd1c7f97e1df66680e28b8a63099d6
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let mensaje = localStorage.getItem('mensaje');
@@ -132,6 +143,7 @@
         setInterval(actualizarNotificaciones, 60 * 1000);
     </script>
     @stack('custom-scripts')
+    
 </body>
 
 </html>
