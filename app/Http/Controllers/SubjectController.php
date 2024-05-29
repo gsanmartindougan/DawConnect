@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use App\Models\Course;
 use App\Models\Subject;
 use App\Models\Comment;
 
@@ -40,11 +41,9 @@ class SubjectController extends Controller
     public function show($id)
     {
         //
-        $posts = Posts::where('subject_id', $id)->orderBy('title')->paginate(10);
-        if (request()->ajax()) {
-            return view('pages.asignaturas.posts', compact('posts'));
-        }
-        return view('pages.asignaturas.show', compact('posts'));
+        $posts = Posts::where('subject_id', $id)->orderBy('title')->get();
+        $cursos = Course::where('subject_id', $id)->orderBy('title')->get();
+        return view('pages.asignaturas.show', compact('posts', 'cursos'));
 
     }
 

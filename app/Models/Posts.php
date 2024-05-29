@@ -9,7 +9,11 @@ class Posts extends Model
 {
     use HasFactory;
     protected $table = "posts";
-
+    protected $fillable = [
+        'title',
+        'content',
+        'like'
+    ];
 
     public function user()
     {

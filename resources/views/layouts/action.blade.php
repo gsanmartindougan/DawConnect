@@ -3,9 +3,8 @@
     <div class="element-container">
         @if (auth()->user()?->student)
             <span class="float-element">
-                <a id="postCreate"
-                    class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-                    role="button" aria-haspopup="true" aria-expanded="false" href="{{ route('post.create') }}">
+                <a id="postCreate"  class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                    role="button"data-bs-toggle="modal" data-bs-target="#create_post" >
                     <x-vaadin-pin-post />
                 </a>
             </span>

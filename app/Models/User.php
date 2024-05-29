@@ -62,5 +62,22 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Posts::class, 'post_like', 'user_id', 'post_id');
     }
+    public function likes_curso()
+    {
+        return $this->belongsToMany(Course::class, 'course_like', 'user_id', 'course_id');
+    }
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class, 'user_id', 'id');
+    }
 
+    public function avatar()
+    {
+        return url('storage/' . $this->avatar);
+    }
+
+    public function cursos()
+    {
+        return $this->hasMany(Course::class, 'teacher_id', 'id');
+    }
 }

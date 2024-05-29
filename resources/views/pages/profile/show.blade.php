@@ -2,8 +2,8 @@
 
 @section('content')
     {{-- dd($user) --}}
-    <div class="card mx-4" style="background-color: rgba(254, 253, 237, 0.4);">
-        <div class="card-body justify-content-md-center mx-4">
+    <div class="card mx-0" style="background-color: rgba(254, 253, 237, 0.4);">
+        <div class="card-body justify-content-md-center mx-0">
             <h2 class="card-title text-center">{{ $user->name }}</h2>
             <div class="container">
                 <!-- Tabs navs -->
@@ -27,7 +27,7 @@
                 </div>
                 <!-- Tabs navs -->
             </div>
-            <div class="card-body mx-2">
+            <div class="card-body">
                 {{-- Tabs --}}
                 <div class="tab-content" role="tablist">
                     {{-- Tab datos personales --}}
@@ -38,21 +38,21 @@
                                     <div class="d-flex flex-wrap">
                                         <div class="col-md-5">
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <img class="thumbnail" src="{{ asset($user->avatar) }}" alt="Avatar">
+                                                <img class="thumbnail" src="{{ asset($user->avatar()) }}" alt="Avatar"
+                                                    style="width: 200px; height: 200px;">
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="mb-3">
                                                 <label for="name" class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" id="name" value="{{ $user->name }}" readonly>
+                                                <input type="text" class="form-control" id="name"
+                                                    value="{{ $user->name }}" readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" value="{{ $user->email }}" readonly>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Se unión en:</label>
-                                                <input type="email" class="form-control" id="email" value="{{ (new DateTime($user->created_at))->format('d-m-Y') }}" readonly>
+                                                <label for="fechaUnion" class="form-label">Se unión en:</label>
+                                                <input type="text" class="form-control" id="fechaUnion"
+                                                    value="{{ (new DateTime($user->created_at))->format('d-m-Y') }}"
+                                                    readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -64,16 +64,7 @@
 
                     {{-- Tab mis publicaciones --}}
                     <div class="tab-pane" id="mis_publicaciones" role="tabpanel" aria-labelledby="simple-tab-1">
-                        <div class="d-felx row">
-                            <div class="col-11 mb-2">
-                                <input type="text" id="searchInput" class="form-control" placeholder="Buscar publicaciones...">
-                            </div>
-                            <div class="col-1 mb-2 text-end">
-                                <button type="button" class="btn btn-sm btn-success" id="search_btn"><x-antdesign-search-o /></button>
-                                <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
-                            </div>
-                        </div>
-                        <div id="paginacion-container">
+                        <div class="row p-0">
                             @include('pages.profile.tabs.publicaciones')
                         </div>
                     </div>
@@ -88,27 +79,3 @@
         </div>
     </div>
 @endsection
-@push('custom-scripts')
-    <script src=" {{asset('js/paginacion.js')}} "></script>
-    <script>
-        $(document).ready(function() {
-            $('#search_btn').on('click', function() {
-                let query = $('#searchInput').val();
-                let user_id = $('#user_id').val();
-                $.ajax({
-                    url: '/posts/search',
-                    method: 'GET',
-                    data: {
-                        query: query,
-                        user_id: user_id
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        $('#paginacion-container').html(data);
-                    }
-                });
-            });
-        });
-    </script>
-
-@endpush

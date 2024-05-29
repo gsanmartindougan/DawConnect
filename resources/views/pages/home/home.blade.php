@@ -1,7 +1,7 @@
 @extends('layouts.app')
 {{--  dd(session('asignaturas')) --}}
 @section('content')
-    <div class="card mx-4" style="background-color: rgb(254, 253, 237, 0.4); ">
+    <div class="card mx-1" style="background-color: rgb(254, 253, 237, 0.4); ">
         <div class="container">
             <!-- Tabs navs -->
             <div class="d-flex justify-content-center">
@@ -32,7 +32,7 @@
             </div>
             <!-- Tabs navs -->
         </div>
-        <div class="card-body mx-4">
+        <div class="card-body mx-1">
             {{-- Tabs --}}
             <div class="tab-content" role="tablist">
                 {{-- Tab publicaciones recientes --}}
@@ -47,26 +47,9 @@
 
                 {{-- Tab avisos --}}
                 <div class="tab-pane" id="avisos" role="tabpanel" aria-labelledby="simple-tab-2">
-                    <div class="container">
-                        avisos
-                    </div>
+                    @include('pages.home.tabs.avisos')
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-@push('custom-scripts')
-    <script>
-        let mensaje = localStorage.getItem('mensaje');
-
-        if (mensaje) {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: mensaje,
-            });
-            localStorage.removeItem('mensaje');
-        }
-    </script>
-@endpush

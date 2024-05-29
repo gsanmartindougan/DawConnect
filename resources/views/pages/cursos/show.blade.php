@@ -1,16 +1,29 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card mx-4" style="background-color: rgb(254, 253, 237, 0.4); ">
+    <div class="card mx-1" style="background-color: rgb(254, 253, 237, 0.4); ">
         <div class="card-body justify-content-center">
-            <div class="card">
-                <div class="card-header bg-danger text-center">
-                    {{--dd($curso)--}}
-                    <h6>{{ $curso->title }}</h6>
+            <div class="card card shadow-lg p-2 mb-5 bg-white rounded">
+                <div class="p-2 text-center">
+                    @if ($curso->user->id == auth()->user()->id)
+                        <a href="{{ route('perfil.index') }}" class="link-dark link-underline-opacity-0">
+                            <img src="{{ asset($curso->user->avatar()) }}" alt="{{ asset('images/avatar/default.png') }}"
+                                style="width: 40px; height: 40px; border-radius: 50%;" class="py-0">
+                            {{ $curso->user->name }}
+                        </a>
+                    @else
+                        <a href="{{ route('perfil.show', $curso->user->id) }}" class="link-dark link-underline-opacity-0">
+                            <img src="{{ asset($curso->user->avatar()) }}" alt="{{ asset('images/avatar/default.png') }}"
+                                style="width: 40px; height: 40px; border-radius: 50%;" class="py-0">
+                            {{ $curso->user->name }}
+                        </a>
+                    @endif
                 </div>
                 <div class="card-body">
+                    <h2>{{ $curso->title }}</h2>
+                    <hr>
                     <p>{!! $curso->content !!}</p>
                 </div>
-                <div class="d-flex card-footer bg-danger py-0">
+                <div class="d-flex p-1">
                     <div class="col-3 text-start">
                         <span>
                             <form id="like_curso"><button class="btn btn-sm btn-outline-success p-0 m-0"
@@ -26,7 +39,7 @@
                             <a class="h-6 w-6 text-red-600 text-warning" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal{{ $curso->id }}" title="borrar">
                                 <x-antdesign-delete-o /></a>
-                            {{-- @include('pages.asignaturas.modal.borrar') --}}
+                            @include('pages.cursos.modal.borrar')
                         @endif
                     </div>
                 </div>
@@ -37,36 +50,13 @@
 
 @push('custom-scripts')
     <script>
-        let mensaje = localStorage.getItem('mensaje');
-
-        if (mensaje) {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: mensaje,
-            });
-            localStorage.removeItem('mensaje_error');
-            localStorage.removeItem('mensaje');
-        }
-        let mensaje_error = localStorage.getItem('mensaje_error');
-
-        if (mensaje_error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops!',
-                text: mensaje_error,
-            });
-            localStorage.removeItem('mensaje');
-            localStorage.removeItem('mensaje_error');
-        }
-
         document.getElementById('like_curso').addEventListener('submit', function(event) {
             event.preventDefault();
             Swal.showLoading()
             let id = document.getElementById('id').value;
             console.log(id);
 
-            axios.get('{{ route('post.like', $curso->id) }}')
+            axios.get('{{ route('cursos.like', $curso->id) }}')
                 .then(function(response) {
                     let mensaje = response.data.mensaje;
                     let mensaje_error = response.data.mensaje_error;

@@ -1,5 +1,5 @@
-<footer class="footer text-center">
+<footer class="footer fixed-bottom text-center p-0">
     <div class="container">
-        <p>&copy; 2024 Todos los derechos reservados</p>
+        <span>&copy; 2024 Todos los derechos reservados</span>
     </div>
 </footer>

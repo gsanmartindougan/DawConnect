@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Comment;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use DOMDocument;
 
 class PostController extends Controller
 {
@@ -33,11 +36,27 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+
+        $contenido = $request->input('content');
+        $documento = new DOMDocument();
+        $documento->loadHTML('<meta charset="utf8">' . $contenido, 9);
+        //dd($documento);
+        $imagenes = $documento->getElementsByTagName('img');
+
+        foreach ($imagenes as $key => $imagen) {
+            $data = base64_decode(explode(',', explode(';', $imagen->getAttribute('src'))[1])[1]);
+            $image_name = "/upload/" . 'p_'. auth()->user()->id . '_'.time().'.png';
+            file_put_contents(public_path() . $image_name, $data);
+            $imagen->removeAttribute('src');
+            $imagen->setAttribute('src', $image_name);
+        }
+        $contenido = $documento->saveHTML();
+
         $post = new Posts();
         $post->student_id = $request->input('user_id');
         $post->subject_id = $request->input('asignatura');
         $post->title = $request->input('titulo');
-        $post->content = $request->input('content');
+        $post->content = $contenido;
         $post->save();
 
         $postUrl = URL::route('post.show', ['post' => $post->id]);
@@ -66,12 +85,12 @@ class PostController extends Controller
     {
         $post = Posts::find($id);
         $user = auth()->user();
-        if($user->likes->contains($post)){
+        if ($user->likes->contains($post)) {
             return response()->json([
                 'success' => false,
                 'mensaje_error' => '¡Ya has añadido esta publicación a favoritos correctamente!'
             ]);
-        }else{
+        } else {
             $post->likes_count();
             $post->save();
             $user->likes()->attach($post->id);
@@ -88,8 +107,8 @@ class PostController extends Controller
     public function show($id)
     {
         //
-        $post = Posts::find($id);
-        $comments = Comment::where('post_id', $id)->get();
+        $post = Posts::with('user')->find($id);
+        $comments = Comment::where('post_id', $id)->paginate(5);
         return view('pages.post.show', compact('post', 'comments'));
     }
 
@@ -109,11 +128,30 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
-        //dd($request->titulo);
         $post = Posts::find($id);
+
+        $contenido = $request->content;
+        $documento = new DOMDocument();
+        $documento->loadHTML('<meta charset="utf8">' . $contenido, 9);
+        //dd($documento);
+        $imagenes = $documento->getElementsByTagName('img');
+
+        foreach ($imagenes as $key => $imagen) {
+            if (strpos($imagen->getAttribute('src'),'data:image/') ===0) {
+                $data = base64_decode(explode(',',explode(';',$imagen->getAttribute('src'))[1])[1]);
+                $image_name = "/upload/" . 'p_'. auth()->user()->id .'_'.time().'.png';
+                file_put_contents(public_path().$image_name,$data);
+
+                $imagen->removeAttribute('src');
+                $imagen->setAttribute('src',$image_name);
+            }
+        }
+        $contenido = $documento->saveHTML();
+
         $post->title = $request->titulo;
-        $post->content = $request->content;
+        $post->content = $contenido;
         $post->save();
+
 
         $postUrl = URL::route('post.show', ['post' => $post->id]);
         $comments = Comment::where('post_id', $post->id)->get();
@@ -133,8 +171,23 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
         $post = Posts::find($id);
+
+        $dom= new DOMDocument();
+        $dom->loadHTML($post->content,9);
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $key => $img) {
+
+            $src = $img->getAttribute('src');
+            $path = Str::of($src)->after('/');
+
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+
         $post->delete();
         return response()->json([
             'success' => true,

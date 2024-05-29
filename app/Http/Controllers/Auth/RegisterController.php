@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -51,8 +52,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:30'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
             'opcion'=> ['required'],
+        ],[
+            'password.mixed' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
+            'email.unique' => 'El email debe ser único',
+            'password.uncompromised' => 'Contraseña demasiado débil'
         ]);
     }
 
@@ -71,7 +76,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'student' => true,
-                'avatar' => 'images/avatar/default.png'
+                'avatar' => 'avatar/default.png'
             ]);
         }
         if($data['opcion'] == 'teacher'){
@@ -81,7 +86,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'teacher' => true,
-                'avatar' => 'images/avatar/default.png'
+                'avatar' => 'avatar/default.png'
             ]);
         }
         if($data['opcion'] == 'mod'){
@@ -91,7 +96,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'mod' => true,
-                'avatar' => 'images/avatar/default.png'
+                'avatar' => 'avatar/default.png'
             ]);
         }
     }

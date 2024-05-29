@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card mx-4" style="background-color: rgba(254, 253, 237, 0.4);">
-        <div class="card-body justify-content-md-center mx-4">
+    <div class="card mx-1" style="background-color: rgba(254, 253, 237, 0.4);">
+        <div class="card-body justify-content-md-center">
             <div class="col-md-12">
                 <div class="text-center">
                     <h3 class="card-title">Nuevo Curso</h3>

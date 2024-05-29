@@ -1,4 +1,4 @@
-<div class="modal fade" id="editComentario{{ $comment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade text-start" id="editComentario{{ $comment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">

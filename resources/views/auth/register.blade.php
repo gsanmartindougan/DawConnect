@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header">Nuevo usuario</div>
 
@@ -79,17 +79,12 @@
                                         value="teacher">
                                     <label class="form-check-label" for="opcion2">Profesor</label>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="opcion" id="opcion3"
-                                        value="mod">
-                                    <label class="form-check-label" for="opcion3">Mod</label>
-                                </div>
                             </div>
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
+                                        Registrarse
                                     </button>
                                 </div>
                             </div>

@@ -16,9 +16,7 @@ class PerfilController extends Controller
     public function index()
     {
         //
-        //dd(session('user')->id);
-        $posts = Posts::where('student_id', auth()->user()->id)->paginate(9);
-        $posts->withPath('/perfil');
+        $posts = Posts::where('student_id', auth()->user()->id)->get();
         if (request()->ajax()) {
             return view('pages.profile.tabs.publicaciones', compact('posts'));
         }
@@ -46,8 +44,7 @@ class PerfilController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $posts = Posts::where('student_id', $user->id)->paginate(9);
-        $posts->withPath('/perfil');
+        $posts = Posts::where('student_id', $user->id)->get();
         if (request()->ajax()) {
             return view('pages.profile.tabs.publicaciones', compact('posts'));
         }

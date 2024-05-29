@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
+use App\Models\Aviso;
 use App\Models\Post;
 use App\Models\User;
 class HomeController extends Controller
@@ -33,6 +34,7 @@ class HomeController extends Controller
                 $asignatura->recent_posts = $asignatura->recentPosts();
                 $asignatura->recent_course = $asignatura->recentCourse();
             }
+            $avisos = Aviso::all();
         } else {
             $asignaturas = Subject::all();
             foreach ($asignaturas as $asignatura) {
@@ -45,7 +47,7 @@ class HomeController extends Controller
         session()->put('asignaturas', $asignaturas);
 
         // Retornar la vista con las asignaturas
-        return view('pages.home.home', compact('asignaturas'));
+        return view('pages.home.home', compact('asignaturas', 'avisos'));
     }
 
 }
