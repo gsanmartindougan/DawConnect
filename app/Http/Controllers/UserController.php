@@ -54,4 +54,26 @@ class UserController extends Controller
             'mensaje' => '¡Avatar cambiado correctamente!',
         ]);
     }
+
+    public function ban(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->ban = 1;
+        $user->save();
+        return response()->json([
+            'success' => true,
+            'mensaje' => '¡Usuario suspendido correctamente!',
+        ]);
+    }
+
+    public function unban(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->ban = 0;
+        $user->save();
+        return response()->json([
+            'success' => true,
+            'mensaje' => '¡Usuario restaurado correctamente!',
+        ]);
+    }
 }

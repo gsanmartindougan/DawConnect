@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <h2>{{ $post->title }}</h2>
                     <hr>
-                    <p>{!! $post->content !!}</p>
+                    <div class="table-responsive">{!! $post->content !!}</div>
                 </div>
                 <div class="d-flex  p-1">
                     <div class="col-3 text-start">
@@ -34,15 +34,21 @@
                         </span>
                     </div>
                     <div class="col-9 text-end">
-                        <span>{{ (new DateTime($post->created_at))->format('d-m-Y H:i') }}</span>
+                        @if ($post->user_id != auth()->user()->id)
+                            <a class="h-6 w-6 text-red-600 text-warning" title="Reportar" style="cursor: pointer;"
+                                onclick="reportarPost({{ $post->id }})">
+                                <x-carbon-flag /></a>
+                        @endif
                         @if ($post->student_id == auth()->user()->id)
-                            <a href="{{ route('post.edit', $post->id) }}" class="h-6 w-6 text-red-600"
-                                title="editar"><x-antdesign-edit-o /></a>
+                            <a href="{{ route('post.edit', $post->id) }}" class="h-6 w-6 text-red-600" title="editar"
+                                style="cursor: pointer;"><x-antdesign-edit-o /></a>
                             <a class="h-6 w-6 text-red-600 text-danger" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal{{ $post->id }}" title="borrar">
+                                data-bs-target="#confirmDeleteModal{{ $post->id }}" title="borrar"
+                                style="cursor: pointer;">
                                 <x-antdesign-delete-o /></a>
                             @include('pages.asignaturas.modal.borrar')
                         @endif
+                        <span>{{ (new DateTime($post->created_at))->format('d-m-Y H:i') }}</span>
                     </div>
                 </div>
             </div>
@@ -72,22 +78,28 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        {!! $comment->content !!}
+                        <div class="table-responsive">
+                            {!! $comment->content !!}
+                        </div>
                     </div>
                     <div class="card-footer py-0">
                         <div class="text-end">
-                            <span>{{ (new DateTime($comment->created_at))->format('d-m-Y H:i') }}</span>
+                            @if ($comment->user_id != auth()->user()->id)
+                                <a class="h-6 w-6 text-red-600 text-warning" title="Reportar"
+                                    onclick="reportarComentario({{ $comment->id }})" style="cursor: pointer;">
+                                    <x-carbon-flag /></a>
+                            @endif
                             @if ($comment->user_id == auth()->user()->id)
                                 <a data-bs-toggle="modal" data-bs-target="#editComentario{{ $comment->id }}"
-                                    class="h-6 w-6 text-red-600" title="editar"><x-antdesign-edit-o /></a>
+                                    class="h-6 w-6 text-red-600" title="editar"
+                                    style="cursor: pointer;"><x-antdesign-edit-o /></a>
                                 <a data-bs-toggle="modal" data-bs-target="#delCom{{ $comment->id }}"
-                                    class="h-6 w-6 text-red-600 text-danger" title="borrar">
-                                    <x-antdesign-delete-o /></a>
-                                <a class="h-6 w-6 text-red-600 text-danger" title="Reportar">
+                                    class="h-6 w-6 text-red-600 text-danger" title="borrar" style="cursor: pointer;">
                                     <x-antdesign-delete-o /></a>
                                 @include('pages.post.comentarios.edit')
                                 @include('pages.post.comentarios.borrar')
                             @endif
+                            <span>{{ (new DateTime($comment->created_at))->format('d-m-Y H:i') }}</span>
                         </div>
                     </div>
                 </div>
@@ -131,5 +143,53 @@
                     });
                 });
         });
+
+        function reportarComentario(com_id) {
+            event.preventDefault();
+            let formData = {
+                id: com_id,
+            }
+            //console.log(id);
+            axios.post('{{ route('reportCom') }}', formData)
+                .then(function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.data.mensaje,
+                    });
+                })
+                .catch(function(error) {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'Parece que ya has reportado este comentario.',
+                    });
+                });
+        }
+
+        function reportarPost(post_id) {
+            event.preventDefault();
+            let formData = {
+                id: post_id,
+            }
+            //console.log(id);
+            axios.post('{{ route('repotPost') }}', formData)
+                .then(function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.data.mensaje,
+                    });
+                })
+                .catch(function(error) {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'Parece que ya has reportado esta publicación.',
+                    });
+                });
+        }
     </script>
 @endpush

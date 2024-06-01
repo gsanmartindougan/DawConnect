@@ -17,11 +17,27 @@
                             </h5>
                         </li>
                         <li class="nav-item">
-                            <h5>
-                                <a class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-                                    data-bs-toggle="tab" role="tab" aria-controls="simple-tabpanel-1"
-                                    aria-selected="false" href="#mis_publicaciones">Mis publicaciones</a>
-                            </h5>
+                            @if ($user->student)
+                                <h5>
+                                    <a class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                                        data-bs-toggle="tab" role="tab" aria-controls="simple-tabpanel-1"
+                                        aria-selected="false" href="#mis_publicaciones">Mis publicaciones</a>
+                                </h5>
+                            @endif
+                            @if ($user->teacher)
+                                <h5>
+                                    <a class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                                        data-bs-toggle="tab" role="tab" aria-controls="simple-tabpanel-1"
+                                        aria-selected="false" href="#mis_cursos">Mis cursos</a>
+                                </h5>
+                            @endif
+                            @if ($user->mod)
+                                <h5>
+                                    <a class="nav-link link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                                        data-bs-toggle="tab" role="tab" aria-controls="simple-tabpanel-1"
+                                        aria-selected="false" href="#mis_avisos">Mis avisos</a>
+                                </h5>
+                            @endif
                         </li>
                     </ul>
                 </div>
@@ -63,19 +79,34 @@
                     </div>
 
                     {{-- Tab mis publicaciones --}}
-                    <div class="tab-pane" id="mis_publicaciones" role="tabpanel" aria-labelledby="simple-tab-1">
-                        <div class="row p-0">
-                            @include('pages.profile.tabs.publicaciones')
+                    @if ($user->student)
+                        <div class="tab-pane" id="mis_publicaciones" role="tabpanel" aria-labelledby="simple-tab-1">
+                            <div class="row p-0">
+                                @include('pages.profile.tabs.publicaciones')
+                            </div>
                         </div>
-                    </div>
-                    {{-- Tab tareas --}}
-                    <div class="tab-pane" id="tareas" role="tabpanel" aria-labelledby="simple-tab-2">
-                        <div class="container">
-                            avisos
+                    @endif
+                    {{-- Tab mis cursos --}}
+                    @if ($user->teacher)
+                        {{-- Tab mis cursos --}}
+                        <div class="tab-pane" id="mis_cursos" role="tabpanel" aria-labelledby="simple-tab-1">
+                            <div class="row p-0">
+                                @include('pages.profile.tabs.cursos')
+                            </div>
                         </div>
-                    </div>
+                    @endif
+                    {{-- Tab mis avisos --}}
+                    @if ($user->mod)
+                        {{-- Tab mis cursos --}}
+                        <div class="tab-pane" id="mis_avisos" role="tabpanel" aria-labelledby="simple-tab-1">
+                            <div class="row p-0">
+                                @include('pages.profile.tabs.avisos')
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

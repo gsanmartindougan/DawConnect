@@ -21,26 +21,44 @@
                 <div class="card-body">
                     <h2>{{ $curso->title }}</h2>
                     <hr>
-                    <p>{!! $curso->content !!}</p>
+                    <div class="table-responsive">{!! $curso->content !!}</div>
                 </div>
                 <div class="d-flex p-1">
                     <div class="col-3 text-start">
-                        <span>
-                            <form id="like_curso"><button class="btn btn-sm btn-outline-success p-0 m-0"
-                                    type="submit"><x-antdesign-heart /></button><input type="hidden" name="id"
-                                    id="id" value="{{ $curso->id }}"> {{ $curso->likes }}</form>
-                        </span>
+                        <div class="row">
+                            <div class="d-flex">
+                                <div>
+                                    <form action="{{ route('pdf') }}" method="POST">
+                                        @csrf
+                                        @method('post')
+                                        <button type="submit" class="btn btn-sm"><x-carbon-generate-pdf /></button>
+                                        <input type="hidden" name="id" value="{{ $curso->id }}">
+                                    </form>
+                                </div>
+                                <div>
+                                    <form id="like_curso"><button class="btn btn-sm btn-outline-success p-0 m-0"
+                                            type="submit"><x-antdesign-heart /></button><input type="hidden" name="id"
+                                            id="id" value="{{ $curso->id }}"> {{ $curso->likes }}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-9 text-end">
-                        <span>{{ (new DateTime($curso->created_at))->format('d-m-Y H:i') }}</span>
+                        @if ($curso->user_id != auth()->user()->id)
+                            <a class="h-6 w-6 text-red-600 text-warning" title="Reportar" style="cursor: pointer;"
+                                onclick="reportarCurso({{ $curso->id }})">
+                                <x-carbon-flag /></a>
+                        @endif
                         @if ($curso->teacher_id == auth()->user()->id)
                             <a href="{{ route('cursos.edit', $curso->id) }}" class="h-6 w-6 text-red-600"
                                 title="editar"><x-antdesign-edit-o /></a>
-                            <a class="h-6 w-6 text-red-600 text-warning" data-bs-toggle="modal"
+                            <a class="h-6 w-6 text-red-600 text-danger" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal{{ $curso->id }}" title="borrar">
                                 <x-antdesign-delete-o /></a>
                             @include('pages.cursos.modal.borrar')
                         @endif
+                        <span>{{ (new DateTime($curso->created_at))->format('d-m-Y H:i') }}</span>
                     </div>
                 </div>
             </div>
@@ -77,5 +95,29 @@
                     });
                 });
         });
+
+        function reportarCurso(curso_id) {
+            event.preventDefault();
+            let formData = {
+                id: curso_id,
+            }
+            //console.log(id);
+            axios.post('{{ route('reportCurso') }}', formData)
+                .then(function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.data.mensaje,
+                    });
+                })
+                .catch(function(error) {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'Parece que ya has reportado este curso.',
+                    });
+                });
+        }
     </script>
 @endpush

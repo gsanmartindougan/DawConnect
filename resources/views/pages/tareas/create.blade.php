@@ -26,10 +26,14 @@
             //Swal.showLoading()
             let formData = new FormData(this);
             //console.log(formData)
+            let url = window.location.pathname;
+            let id = url.substring(url.lastIndexOf('/'));
+            console.log(id)
             axios.post('{{ route('tareas.store') }}', formData)
                 .then(function(response) {
-                    //console.log(response.data.postUrl)
-                    //let postUrl = response.data.postUrl;
+                    if(id === '/tareas'){
+                        window.location.reload();
+                    }
                     Swal.fire({
                         icon: 'success',
                         title: '¡Éxito!',

@@ -60,8 +60,16 @@
                     @if (auth()->user()->avatar == 'avatar/default.png')
                         <li class="nav-item">
                             <a id="navbarPerfil" class="nav-link text-danger" role="button" aria-haspopup="true"
-                                aria-expanded="false" onclick="avatarSwall()" {{--  data-bs-toggle="modal" data-bs-target="#alertaPerfil" --}}>
+                                aria-expanded="false" onclick="avatarSwall()">
                                 <x-carbon-warning />
+                            </a>
+                        </li>
+                    @endif
+                    @if (auth()->user()?->mod)
+                        <li class="nav-item">
+                            <a id="navbarPerfil" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"
+                                href="{{ route('moderacion.index') }}">
+                                <x-carbon-user-data />
                             </a>
                         </li>
                     @endif

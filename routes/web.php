@@ -21,26 +21,40 @@ Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('/home', App\Http\Controllers\HomeController::class);
-    Route::resource('/post', App\Http\Controllers\PostController::class);
-    Route::resource('/cursos', App\Http\Controllers\CursosController::class);
-    Route::resource('/avisos', App\Http\Controllers\AvisosController::class);
-    Route::get('/cursos/like/{id}', [ App\Http\Controllers\CursosController::class, 'like'])->name('cursos.like');
-    Route::get('/posts/search', [ App\Http\Controllers\PostController::class, 'search'])->name('post.search');
-    Route::get('/posts/like/{id}', [ App\Http\Controllers\PostController::class, 'like'])->name('post.like');
-    Route::resource('/asignatura', App\Http\Controllers\SubjectController::class);
-    Route::resource('/perfil', App\Http\Controllers\PerfilController::class);
-    Route::resource('/comentario', App\Http\Controllers\CommentController::class);
-    Route::resource('/usuario', App\Http\Controllers\UserController::class);
-    Route::resource('/tareas', App\Http\Controllers\TareasController::class);
-    Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
-    Route::get('/notifications-markAsReadAll', [App\Http\Controllers\NotificationsController::class, 'markAsReadAll'])->name('markAsReadAll');
-    Route::get('/notifications-mark-as-read-show/{post_id}/{not_id}', [App\Http\Controllers\NotificationsController::class, 'markAsReadShow'])->name('mark-as-read-show');
-    Route::get('/notifications-mark-as-read-show-aviso/{aviso_id}/{not_id}', [App\Http\Controllers\NotificationsController::class, 'markAsReadShowAviso'])->name('mark-as-read-show-aviso');
-    Route::post('/search', [App\Http\Controllers\SearchController::class, 'buscar'])->name('buscar');
-    Route::post('/tareas-estado', [App\Http\Controllers\TareasController::class, 'estado'])->name('estado');
-    Route::post('/tareas-borrado', [App\Http\Controllers\TareasController::class, 'borrado'])->name('borrado');
-    Route::post('/password', [App\Http\Controllers\UserController::class, 'password'])->name('cambioPassword');
-    Route::post('/avatar', [App\Http\Controllers\UserController::class, 'avatar'])->name('cambioAvatar');
+    Route::group(['middleware' => 'ban'], function () {
+        Route::resource('/home', App\Http\Controllers\HomeController::class);
+        Route::resource('/post', App\Http\Controllers\PostController::class);
+        Route::resource('/cursos', App\Http\Controllers\CursosController::class);
+        Route::resource('/avisos', App\Http\Controllers\AvisosController::class);
+
+        Route::resource('moderacion', App\Http\Controllers\ReportesController::class);
+        Route::post('/report-post', [App\Http\Controllers\ReportesController::class, 'repotPost'])->name('repotPost');
+        Route::post('/report-comment', [App\Http\Controllers\ReportesController::class, 'reportCom'])->name('reportCom');
+        Route::post('/report-curso', [App\Http\Controllers\ReportesController::class, 'reportCurso'])->name('reportCurso');
+
+        Route::get('/cursos/like/{id}', [ App\Http\Controllers\CursosController::class, 'like'])->name('cursos.like');
+        Route::post('/cursos-pdf', [ App\Http\Controllers\CursosController::class, 'pdf'])->name('pdf');
+
+        Route::get('/posts/search', [ App\Http\Controllers\PostController::class, 'search'])->name('post.search');
+        Route::get('/posts/like/{id}', [ App\Http\Controllers\PostController::class, 'like'])->name('post.like');
+
+        Route::resource('/asignatura', App\Http\Controllers\SubjectController::class);
+        Route::resource('/perfil', App\Http\Controllers\PerfilController::class);
+        Route::resource('/comentario', App\Http\Controllers\CommentController::class);
+        Route::resource('/usuario', App\Http\Controllers\UserController::class);
+        Route::post('/usuario-ban', [App\Http\Controllers\UserController::class, 'ban'])->name('ban');
+        Route::post('/usuario-unban', [App\Http\Controllers\UserController::class, 'unban'])->name('unban');
+        Route::resource('/tareas', App\Http\Controllers\TareasController::class);
+        Route::get('/notifications', [App\Http\Controllers\NotificationsController::class, 'index'])->name('notifications');
+        Route::get('/notifications-markAsReadAll', [App\Http\Controllers\NotificationsController::class, 'markAsReadAll'])->name('markAsReadAll');
+        Route::get('/notifications-mark-as-read-show/{post_id}/{not_id}', [App\Http\Controllers\NotificationsController::class, 'markAsReadShow'])->name('mark-as-read-show');
+        Route::get('/notifications-mark-as-read-show-aviso/{aviso_id}/{not_id}', [App\Http\Controllers\NotificationsController::class, 'markAsReadShowAviso'])->name('mark-as-read-show-aviso');
+        Route::post('/search', [App\Http\Controllers\SearchController::class, 'buscar'])->name('buscar');
+
+        Route::post('/tareas-estado', [App\Http\Controllers\TareasController::class, 'estado'])->name('estado');
+        Route::post('/tareas-borrado', [App\Http\Controllers\TareasController::class, 'borrado'])->name('borrado');
+        Route::post('/password', [App\Http\Controllers\UserController::class, 'password'])->name('cambioPassword');
+        Route::post('/avatar', [App\Http\Controllers\UserController::class, 'avatar'])->name('cambioAvatar');
+    });
 });
 

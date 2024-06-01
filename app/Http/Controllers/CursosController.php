@@ -8,6 +8,8 @@ use App\Models\Course;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use App\Rules\NoEmptyHtml;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DOMDocument;
 
 class CursosController extends Controller
@@ -27,9 +29,17 @@ class CursosController extends Controller
     }
     public function store(Request $request)
     {
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         if (!auth()->user()->teacher) {
             abort(404, 'No tienes acceso');
         }
+
+        $request->validate([
+            'content' => ['required', new NoEmptyHtml],
+        ], [
+            'content.required' => '¡Escribe algo!',
+        ]);
+
         $contenido = $request->input('content');
         $documento = new DOMDocument();
         $documento->loadHTML('<meta charset="utf8">' . $contenido, 9);
@@ -71,6 +81,7 @@ class CursosController extends Controller
     }
     public function update(Request $request, $id)
     {
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         if (!auth()->user()->teacher) {
             abort(404, 'No tienes acceso');
         }
@@ -129,7 +140,8 @@ class CursosController extends Controller
 
     public function destroy($id)
     {
-        if (!auth()->user()->teacher || !auth()->user()->mod) {
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
+        if (!auth()->user()->teacher) {
             abort(404, 'No tienes acceso');
         }
         $curso = Course::find($id);
@@ -153,5 +165,17 @@ class CursosController extends Controller
             'success' => true,
             'mensaje' => '¡El curso se ha borrado correctamente!',
         ]);
+    }
+
+    public function pdf(Request $request)
+    {
+        //dd($request);
+        $curso = Course::find($request->id);
+        $data = [
+            'titulo' => $curso->title,
+            'contenido' => $curso->content
+        ];
+        $pdf = Pdf::loadView('pdf.curso', $data);
+        return $pdf->download($curso->title.'.pdf');
     }
 }

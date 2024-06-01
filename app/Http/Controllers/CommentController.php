@@ -38,6 +38,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $request->validate([
             'content' => ['required', new NoEmptyHtml],
         ], [
@@ -96,8 +97,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        //dd($request->input('content'));
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $comentario = Comment::find($id);
 
         $contenido = $request->content;
@@ -132,7 +132,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $comentario = Comment::find($id);
         $dom= new DOMDocument();
         $dom->loadHTML($comentario->content,9);

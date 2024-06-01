@@ -9,6 +9,7 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use App\Rules\NoEmptyHtml;
 use DOMDocument;
 
 class PostController extends Controller
@@ -35,7 +36,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
+        $request->validate([
+            'content' => ['required', new NoEmptyHtml],
+        ], [
+            'content.required' => '¡Escribe algo!',
+        ]);
 
         $contenido = $request->input('content');
         $documento = new DOMDocument();
@@ -127,7 +133,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $post = Posts::find($id);
 
         $contenido = $request->content;
@@ -171,6 +177,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $post = Posts::find($id);
 
         $dom= new DOMDocument();

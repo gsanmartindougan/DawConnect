@@ -12,6 +12,7 @@
                         <form id="postForm">
                             <label for="asignatura" class="fs-5">Asignatura</label>
                             <select name="asignatura" id="asignatura" class="form-select form-select-lg mb-3" required>
+                                <option value="">Elige una asignatura</option>
                                 @php
                                     $asignaturas = session('asignaturas');
                                 @endphp
@@ -21,7 +22,7 @@
                             </select>
                             <label for="titulo" class="fs-5">Título</label>
                             <input type="text" id="titulo" name="titulo" class="form-control mb-2" required>
-                            <textarea id="" class="summernote" name="content"></textarea>
+                            <textarea id="" class="summernote summernote_create" name="content"></textarea>
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary mt-2">Publicar</button>
@@ -38,21 +39,32 @@
     <script>
         document.getElementById('postForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            Swal.showLoading()
-            let formData = new FormData(this);
-            //console.log(formData)
-            axios.post('{{ route('cursos.store') }}', formData)
-                .then(function(response) {
-                    //console.log(response.data.postUrl)
-                    let cursoUrl = response.data.cursoUrl;
-                    let mensaje = response.data.mensaje;
-                    localStorage.setItem('mensaje', mensaje);
-                    window.location.replace(cursoUrl);
-                })
-                .catch(function(error) {
-                    console.error(error);
-                    console.error(response.data.cursoUrl);
+            if ($('.summernote_create').summernote('isEmpty')) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: '¡Escribe algo!',
                 });
+            }else{
+                Swal.showLoading()
+                let formData = new FormData(this);
+                axios.post('{{ route('cursos.store') }}', formData)
+                    .then(function(response) {
+                        //console.log(response.data.postUrl)
+                        let cursoUrl = response.data.cursoUrl;
+                        let mensaje = response.data.mensaje;
+                        localStorage.setItem('mensaje', mensaje);
+                        window.location.replace(cursoUrl);
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops!',
+                            text: error.response.data.message,
+                        });
+                    });
+            }
         });
     </script>
 @endpush

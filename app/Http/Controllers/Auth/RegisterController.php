@@ -57,7 +57,9 @@ class RegisterController extends Controller
         ],[
             'password.mixed' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
             'email.unique' => 'El email debe ser único',
-            'password.uncompromised' => 'Contraseña demasiado débil'
+            'password.uncompromised' => 'Contraseña demasiado débil',
+            'password.symbols' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
+            'password.numbers' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
         ]);
     }
 

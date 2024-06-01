@@ -80,4 +80,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Course::class, 'teacher_id', 'id');
     }
+
+    public function reportPost()
+    {
+        return $this->hasMany(ReportPost::class, 'user_id', 'id');
+    }
+
+    public function reportCurso()
+    {
+        return $this->hasMany(ReportCourse::class, 'user_id', 'id');
+    }
+
+    public function reportComentario()
+    {
+        return $this->hasMany(ReportComment::class, 'user_id', 'id');
+    }
 }

@@ -43,7 +43,8 @@ class SubjectController extends Controller
         //
         $posts = Posts::where('subject_id', $id)->orderBy('title')->get();
         $cursos = Course::where('subject_id', $id)->orderBy('title')->get();
-        return view('pages.asignaturas.show', compact('posts', 'cursos'));
+		$asignatura = Subject::find($id);
+        return view('pages.asignaturas.show', compact('posts', 'cursos', 'asignatura'));
 
     }
 

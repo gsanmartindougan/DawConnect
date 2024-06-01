@@ -6,6 +6,7 @@ use App\Models\Posts;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Aviso;
 
 use Illuminate\Http\Request;
 
@@ -13,8 +14,9 @@ class SearchController extends Controller
 {
     public function buscar(Request $request)
     {
+        //Esto lo hice con ayuda de chatGPT
         $query = $request->busqueda;
-
+        $query = htmlentities($query, ENT_QUOTES, 'UTF-8');
         // Busca en publicaciones
         $posts = Posts::where('title', 'LIKE', "%{$query}%")
             ->orWhere('content', 'LIKE', "%{$query}%")
@@ -28,11 +30,11 @@ class SearchController extends Controller
         $courses = Course::where('content', 'LIKE', "%{$query}%")
             ->get();
 
-        /*         // Busca en avisos
-                $notices = Notice::where('title', 'LIKE', "%{$query}%")
-                    ->orWhere('description', 'LIKE', "%{$query}%")
-                    ->get();
-         */
+        // Busca en avisos
+        $avisos = Aviso::where('title', 'LIKE', "%{$query}%")
+            ->orWhere('content', 'LIKE', "%{$query}%")
+            ->get();
+
         // Busca en usuarios
         $users = User::where('name', 'LIKE', "%{$query}%")
             ->orWhere('email', 'LIKE', "%{$query}%")
@@ -43,7 +45,7 @@ class SearchController extends Controller
             'posts' => $posts,
             'comments' => $comments,
             'courses' => $courses,
-            /* 'notices' => $notices, */
+            'avisos' => $avisos,
             'users' => $users,
         ]);
 

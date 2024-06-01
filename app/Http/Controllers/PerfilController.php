@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Posts;
+use App\Models\Course;
 use App\Models\User;
+use App\Models\Aviso;
 class PerfilController extends Controller
 {
     //
@@ -15,12 +17,19 @@ class PerfilController extends Controller
      */
     public function index()
     {
-        //
-        $posts = Posts::where('student_id', auth()->user()->id)->get();
-        if (request()->ajax()) {
-            return view('pages.profile.tabs.publicaciones', compact('posts'));
+        if(auth()->user()->student){
+            $posts = Posts::where('student_id', auth()->user()->id)->get();
+            return view('pages.profile.index', compact('posts'));
         }
-        return view('pages.profile.index', compact('posts'));
+        if(auth()->user()->teacher){
+            $cursos = Course::where('teacher_id', auth()->user()->id)->get();
+            return view('pages.profile.index', compact('cursos'));
+        }
+        if(auth()->user()->mod){
+            $avisos = Aviso::where('mod_id', auth()->user()->id)->get();
+            return view('pages.profile.index', compact('avisos'));
+        }
+
     }
     /**
      * Show the form for creating a new resource.
@@ -44,11 +53,18 @@ class PerfilController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $posts = Posts::where('student_id', $user->id)->get();
-        if (request()->ajax()) {
-            return view('pages.profile.tabs.publicaciones', compact('posts'));
+        if($user->student){
+            $posts = Posts::where('student_id', $id)->get();
+            return view('pages.profile.show', compact('posts', 'user'));
         }
-        return view('pages.profile.show', compact('posts', 'user'));
+        if($user->teacher){
+            $cursos = Course::where('teacher_id', $id)->get();
+            return view('pages.profile.show', compact('cursos', 'user'));
+        }
+        if($user->mod){
+            $avisos = Aviso::where('mod_id', $id)->get();
+            return view('pages.profile.show', compact('avisos', 'user'));
+        }
 
     }
 

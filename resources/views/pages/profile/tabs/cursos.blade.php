@@ -10,7 +10,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (auth()->user()->cursos as $curso)
+                    @foreach ($cursos as $curso)
                         <tr>
                             <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                                 href="{{ route('cursos.show', $curso->id) }}">{{ $curso->title }}</a></td>

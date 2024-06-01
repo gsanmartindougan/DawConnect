@@ -14,17 +14,11 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset('css/summernote-lite.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jkanban.min.css') }}">
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
-=======
-    <link rel="stylesheet" href="https://dawconnect.up.railway.app/css/summernote-lite.css">
-    <link rel="stylesheet" href="https://dawconnect.up.railway.app/css/bootstrap.css">
-    <link rel="stylesheet" href="https://dawconnect.up.railway.app/css/styles.css">
->>>>>>> 484d25bb0bbd1c7f97e1df66680e28b8a63099d6
 </head>
 
 <body>
@@ -39,111 +33,69 @@
         </main>
         @include('layouts.footer')
     </div>
-<<<<<<< HEAD
     <script src="{{ asset('js/summernote-lite.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script src="{{ asset('js/jkanban.min.js') }}"></script>
-=======
-    <script src="https://dawconnect.up.railway.app/js/summernote-lite.js"></script>
-    <script src="https://dawconnect.up.railway.app/js/bootstrap.bundle.js"></script>
->>>>>>> 484d25bb0bbd1c7f97e1df66680e28b8a63099d6
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        let mensaje = localStorage.getItem('mensaje');
-
-        if (mensaje) {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: mensaje,
-            });
-            localStorage.removeItem('mensaje_error');
-            localStorage.removeItem('mensaje');
-        }
-        let mensaje_error = localStorage.getItem('mensaje_error');
-
-        if (mensaje_error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops!',
-                text: mensaje_error,
-            });
-            localStorage.removeItem('mensaje');
-            localStorage.removeItem('mensaje_error');
-        }
-        $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 500,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['codeview', 'help']],
-                    ['height', ['height']]
-                ]
-            });
-            $('.data_table').DataTable({
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "«",
-                        "sLast": "»",
-                        "sNext": "›",
-                        "sPrevious": "‹"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+    @if (auth()->user())
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script id="cid0020000378051268285" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js"
+            style="width: 320px;height: 485px;">
+            {
+                "handle": "dawconnect",
+                "arch": "js",
+                "styles": {
+                    "a": "58A399",
+                    "b": 100,
+                    "c": "FFFFFF",
+                    "d": "FFFFFF",
+                    "k": "58A399",
+                    "l": "58A399",
+                    "m": "58A399",
+                    "n": "FFFFFF",
+                    "p": "10",
+                    "q": "58A399",
+                    "r": 100,
+                    "pos": "bl",
+                    "cv": 1,
+                    "cvbg": "58A399",
+                    "cvw": 71,
+                    "cvh": 26
                 }
-            });
-        });
-    </script>
-    <script>
-        function actualizarNotificaciones() {
-            axios.get('{{ route('notifications') }}')
-                .then(function(response) {
-                    document.getElementById('drop_notificaciones').innerHTML = response.data.unreadNotifications;
-                    //console.log(response.data.unreadNotifications)
-                    //console.log(document.querySelector('.icono_notificacion'))
-                    const iconoNotificacionesComen = document.querySelectorAll('.icono_comentario');
-                    const iconoNotificacionesAviso = document.querySelectorAll('.icono_aviso');
-                    if (iconoNotificacionesComen) {
-                        iconoNotificacionesComen.forEach(icono => {
-                            icono.innerHTML = '{{ svg('carbon-add-comment') }}';
-                        });
-                    }
-                    if (iconoNotificacionesAviso) {
-                        iconoNotificacionesAviso.forEach(icono => {
-                            icono.innerHTML = '{{ svg('carbon-rule') }}';
-                        });
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error al obtener notificaciones:', error);
-                });
-        }
-        actualizarNotificaciones();
-        setInterval(actualizarNotificaciones, 60 * 1000);
-    </script>
+            }
+        </script>
+        <script>
+            function actualizarNotificaciones() {
+                axios.get('{{ route('notifications') }}')
+                    .then(function(response) {
+                        document.getElementById('drop_notificaciones').innerHTML = response.data.unreadNotifications;
+                        //console.log(response.data.unreadNotifications)
+                        //console.log(document.querySelector('.icono_notificacion'))
+                        const iconoNotificacionesComen = document.querySelectorAll('.icono_comentario');
+                        const iconoNotificacionesAviso = document.querySelectorAll('.icono_aviso');
+                        if (iconoNotificacionesComen) {
+                            iconoNotificacionesComen.forEach(icono => {
+                                icono.innerHTML = '{{ svg('carbon-add-comment') }}';
+                            });
+                        }
+                        if (iconoNotificacionesAviso) {
+                            iconoNotificacionesAviso.forEach(icono => {
+                                icono.innerHTML = '{{ svg('carbon-rule') }}';
+                            });
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Error al obtener notificaciones:', error);
+                    });
+            }
+            actualizarNotificaciones();
+            setInterval(actualizarNotificaciones, 60 * 1000);
+        </script>
+    @endif
+
     @stack('custom-scripts')
-    
+
 </body>
 
 </html>

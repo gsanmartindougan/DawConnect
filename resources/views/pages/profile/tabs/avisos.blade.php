@@ -1,7 +1,7 @@
 <div class="col-12 card">
     <div class="col-12 card-body">
         <div class="table-responsive">
-            <table id="avisos_table" class="table table-striped col-12 w-100 data_table">
+            <table id="mis_avisos_table" class="table table-striped col-12 w-100 p-0 data_table">
                 <thead>
                     <tr>
                         <th>Título</th>
@@ -10,7 +10,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($results['avisos'] as $aviso)
+                    @foreach ($avisos as $aviso)
                         <tr>
                             <td><a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                                 href="{{ route('avisos.show', $aviso->id) }}">{{ $aviso->title }}</a></td>
@@ -32,4 +32,3 @@
         </div>
     </div>
 </div>
-

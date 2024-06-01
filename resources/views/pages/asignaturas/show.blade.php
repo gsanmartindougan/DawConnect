@@ -3,7 +3,7 @@
 @section('content')
 <div class="card mx-0" style="background-color: rgba(254, 253, 237, 0.4);">
     <div class="card-body justify-content-md-center mx-0">
-        <h1 class="mb-4 text-center"> {{ $posts[0]?->asignatura?->name }} </h1>
+        <h1 class="mb-4 text-center"> {{ $posts[0]?->asignatura?->name ?? $asignatura->name}} </h1>
         <div class="container">
             <!-- Tabs navs -->
             <div class="d-flex justify-content-center">
