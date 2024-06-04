@@ -22,7 +22,7 @@ class Subject extends Model
     {
         return $this->hasMany(Course::class);
     }
-
+    //con ayuda de chatGPT
     public function recentPosts($limit = 5)
     {
         return $this->posts()->orderBy('created_at', 'desc')->limit($limit)->get();
