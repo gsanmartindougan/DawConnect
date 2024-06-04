@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- dd($user) --}}
+{{ Breadcrumbs::render('perfil.show', $user) }}
     <div class="card mx-0" style="background-color: rgba(254, 253, 237, 0.4);">
         <div class="card-body justify-content-md-center mx-0">
             <h2 class="card-title text-center">{{ $user->name }}</h2>

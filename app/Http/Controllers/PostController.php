@@ -115,7 +115,8 @@ class PostController extends Controller
         //
         $post = Posts::with('user')->find($id);
         $comments = Comment::where('post_id', $id)->paginate(5);
-        return view('pages.post.show', compact('post', 'comments'));
+        $asignatura = Subject::find($post->subject_id);
+        return view('pages.post.show', compact('post', 'comments', 'asignatura'));
     }
 
     /**
@@ -135,40 +136,54 @@ class PostController extends Controller
     {
         //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $post = Posts::find($id);
+        //dd($request->content);
+        if(empty($request->content)){
+            $post->title = $request->titulo;
+            $post->save();
+            $postUrl = URL::route('post.show', ['post' => $post->id]);
+            $comments = Comment::where('post_id', $post->id)->get();
+            return response()->json([
+                'success' => true,
+                'post' => $post,
+                'postUrl' => $postUrl,
+                'mensaje' => '¡La publicación se ha modificado correctamente!',
+                'comments' => $comments,
+            ]);
+        }else{
+            $contenido = $request->content;
+            $documento = new DOMDocument();
+            $documento->loadHTML('<meta charset="utf8">' . $contenido, 9);
+            //dd($documento);
+            $imagenes = $documento->getElementsByTagName('img');
 
-        $contenido = $request->content;
-        $documento = new DOMDocument();
-        $documento->loadHTML('<meta charset="utf8">' . $contenido, 9);
-        //dd($documento);
-        $imagenes = $documento->getElementsByTagName('img');
+            foreach ($imagenes as $key => $imagen) {
+                if (strpos($imagen->getAttribute('src'),'data:image/') ===0) {
+                    $data = base64_decode(explode(',',explode(';',$imagen->getAttribute('src'))[1])[1]);
+                    $image_name = "/upload/" . 'p_'. auth()->user()->id .'_'.time().'.png';
+                    file_put_contents(public_path().$image_name,$data);
 
-        foreach ($imagenes as $key => $imagen) {
-            if (strpos($imagen->getAttribute('src'),'data:image/') ===0) {
-                $data = base64_decode(explode(',',explode(';',$imagen->getAttribute('src'))[1])[1]);
-                $image_name = "/upload/" . 'p_'. auth()->user()->id .'_'.time().'.png';
-                file_put_contents(public_path().$image_name,$data);
-
-                $imagen->removeAttribute('src');
-                $imagen->setAttribute('src',$image_name);
+                    $imagen->removeAttribute('src');
+                    $imagen->setAttribute('src',$image_name);
+                }
             }
+            $contenido = $documento->saveHTML();
+
+            $post->title = $request->titulo;
+            $post->content = $contenido;
+            $post->save();
+
+
+            $postUrl = URL::route('post.show', ['post' => $post->id]);
+            $comments = Comment::where('post_id', $post->id)->get();
+
+            return response()->json([
+                'success' => true,
+                'post' => $post,
+                'postUrl' => $postUrl,
+                'mensaje' => '¡La publicación se ha modificado correctamente!',
+                'comments' => $comments,
+            ]);
         }
-        $contenido = $documento->saveHTML();
-
-        $post->title = $request->titulo;
-        $post->content = $contenido;
-        $post->save();
-
-
-        $postUrl = URL::route('post.show', ['post' => $post->id]);
-        $comments = Comment::where('post_id', $post->id)->get();
-
-        return response()->json([
-            'success' => true,
-            'post' => $post,
-            'postUrl' => $postUrl,
-            'mensaje' => '¡La publicación se ha modificado correctamente!',
-            'comments' => $comments,
-        ]);
     }
 
 

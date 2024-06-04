@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card mx-1" style="background-color: rgb(254, 253, 237, 0.4); ">
+{{ Breadcrumbs::render('avisos.show', $aviso) }}
+    <div class="card" style="background-color: rgb(254, 253, 237, 0.4); ">
         <div class="card-body justify-content-center">
             <div class="card shadow-lg p-2 mb-5 bg-white rounded">
                 <div class="p-1 text-center">

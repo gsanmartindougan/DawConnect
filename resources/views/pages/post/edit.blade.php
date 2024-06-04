@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card mx-1" style="background-color: rgb(254, 253, 237, 0.4); ">
+{{ Breadcrumbs::render('post.edit', $post) }}
+    <div class="card" style="background-color: rgb(254, 253, 237, 0.4); ">
         <div class="card-body justify-content-md-center">
             <div class="col-md-12">
                 <div class="text-center">
-                    {{-- dd(auth()->user()) --}}
                     <h3 class="card-title">Editar Publicación</h3>
                 </div>
                 <div class="card">

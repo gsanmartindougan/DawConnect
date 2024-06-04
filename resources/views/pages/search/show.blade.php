@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- dd($tab) --}}
+{{ Breadcrumbs::render('buscar', $query) }}
 <div class="card mx-0" style="background-color: rgba(254, 253, 237, 0.4);">
     <div class="card-body justify-content-md-center mx-0">
         <div class="container">

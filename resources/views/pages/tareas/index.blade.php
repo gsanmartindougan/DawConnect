@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- dd($tareas) --}}
+{{ Breadcrumbs::render('tareas.index') }}
     <div class="d-flex row m-1">
         <div class="col-12 col-md-4 mt-2 mx-0">
             <div class="bg-info text-center py-1">

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- dd($post) --}}
-    <div class="card mx-1" style="background-color: rgb(254, 253, 237, 0.4); ">
+{{ Breadcrumbs::render('post.show', $post) }}
+<div class="card" style="background-color: rgb(254, 253, 237, 0.4); ">
         <div class="card-body justify-content-center">
             <div class="card shadow-lg p-2 mb-5 bg-white rounded">
                 <div class="p-3 text-center">
@@ -34,7 +34,7 @@
                         </span>
                     </div>
                     <div class="col-9 text-end">
-                        @if ($post->user_id != auth()->user()->id)
+                        @if ($post->student_id != auth()->user()->id)
                             <a class="h-6 w-6 text-red-600 text-warning" title="Reportar" style="cursor: pointer;"
                                 onclick="reportarPost({{ $post->id }})">
                                 <x-carbon-flag /></a>
