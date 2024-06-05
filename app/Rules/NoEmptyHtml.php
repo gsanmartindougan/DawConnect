@@ -14,6 +14,7 @@ class NoEmptyHtml implements Rule
      */
     public function passes($attribute, $value)
     {
+        //con ayuda de chatGPT
         // Verifica que el valor no sea "<p><br></p>"
         $valueWithoutTags = strip_tags($value);
 
