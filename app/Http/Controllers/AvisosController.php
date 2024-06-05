@@ -38,8 +38,7 @@ class AvisosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $contenido = $request->input('content');
         $documento = new DOMDocument();
         $documento->loadHTML('<meta charset="utf8">' . $contenido, 9);
@@ -99,7 +98,7 @@ class AvisosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $aviso = Aviso::find($id);
 
         $contenido = $request->content;
@@ -141,6 +140,7 @@ class AvisosController extends Controller
      */
     public function destroy($id)
     {
+        //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
         $aviso = Aviso::find($id);
 
         $dom= new DOMDocument();
