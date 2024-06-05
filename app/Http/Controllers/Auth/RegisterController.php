@@ -54,10 +54,13 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
             'opcion'=> ['required'],
+            'condiciones' => ['required'],
         ],[
             'password.mixed' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
             'email.unique' => 'El email debe ser único',
+            'condiciones.required' => 'Acepta las condiciones y términos',
             'password.uncompromised' => 'Contraseña demasiado débil',
+            'opcion.required' => 'Elige un tipo de usuario',
             'password.symbols' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
             'password.numbers' => 'La contraseña debe ser mixta, incluyendo números letras (mayúsculas y minúsculs) y símbolos. (8 caracteres)',
         ]);

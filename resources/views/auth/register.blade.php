@@ -79,8 +79,21 @@
                                         value="teacher">
                                     <label class="form-check-label" for="opcion2">Profesor</label>
                                 </div>
+                                @error('opcion')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-
+                            <div class="mb-3 d-flex justify-content-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="condiciones" id="condiciones"
+                                        value="student" required>
+                                    <label class="form-check-label">Acepto los <a data-bs-toggle="modal"
+                                            data-bs-target="#terminos" class="link-opacity-100">términos y
+                                            condiciones</a></label>
+                                </div>
+                            </div>
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
@@ -94,4 +107,5 @@
             </div>
         </div>
     </div>
+    @include('auth.terminos')
 @endsection
