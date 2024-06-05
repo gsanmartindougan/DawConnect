@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function avatar(Request $request)
     {
-        //dd($request->avatar);
+        //https://www.youtube.com/watch?v=986iFLWJ8o8
         $request->validate([
             'avatar' => 'required|file|max:2048',
         ], [
@@ -57,6 +57,7 @@ class UserController extends Controller
 
     public function ban(Request $request)
     {
+        //https://dev.to/shanisingh03/how-to-ban-suspend-users-in-laravel-8-1gh3
         $user = User::find($request->id);
         $user->ban = 1;
         $user->save();

@@ -13,6 +13,7 @@ class NotificationsController extends Controller
 {
     public function index()
     {
+        //con ayuda de chatGPT
         $user = auth()->user();
         $unreadNotifications = $user->unreadNotifications()->take(10)->get();
         $cuenta = $user->unreadNotifications()->get();

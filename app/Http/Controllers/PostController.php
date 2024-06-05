@@ -37,6 +37,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //https://github.com/mohsenkarimi-mk/Summernote-Text-Editor-CRUD-Image-Upload-in-Laravel/blob/main/app/Http/Controllers/PostController.php
+        //con ayuda de chatGPT
         $request->validate([
             'content' => ['required', new NoEmptyHtml],
         ], [

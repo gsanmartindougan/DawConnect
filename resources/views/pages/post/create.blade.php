@@ -13,6 +13,7 @@
                         <form id="postForm">
                             <label for="asignatura" class="fs-5">Asignatura</label>
                             <select name="asignatura" id="asignatura" class="form-select form-select-lg mb-3" required>
+                                <option value="">Elige una asignatura</option>
                                 @php
                                     $asignaturas = session('asignaturas');
                                 @endphp
